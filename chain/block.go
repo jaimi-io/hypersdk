@@ -21,11 +21,11 @@ import (
 	oteltrace "go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
-	"github.com/ava-labs/hypersdk/codec"
-	"github.com/ava-labs/hypersdk/consts"
-	"github.com/ava-labs/hypersdk/utils"
-	"github.com/ava-labs/hypersdk/window"
-	"github.com/ava-labs/hypersdk/workers"
+	"github.com/jaimi-io/hypersdk/codec"
+	"github.com/jaimi-io/hypersdk/consts"
+	"github.com/jaimi-io/hypersdk/utils"
+	"github.com/jaimi-io/hypersdk/window"
+	"github.com/jaimi-io/hypersdk/workers"
 )
 
 var (

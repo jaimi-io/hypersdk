@@ -7,7 +7,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/ava-labs/hypersdk/trace"
+	"github.com/jaimi-io/hypersdk/trace"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 )

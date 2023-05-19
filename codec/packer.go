@@ -9,9 +9,9 @@ import (
 	"github.com/ava-labs/avalanchego/ids"
 	"github.com/ava-labs/avalanchego/utils/wrappers"
 
-	"github.com/ava-labs/hypersdk/consts"
-	"github.com/ava-labs/hypersdk/crypto"
-	"github.com/ava-labs/hypersdk/window"
+	"github.com/jaimi-io/hypersdk/consts"
+	"github.com/jaimi-io/hypersdk/crypto"
+	"github.com/jaimi-io/hypersdk/window"
 )
 
 // Packer is a wrapper struct for the Packer struct

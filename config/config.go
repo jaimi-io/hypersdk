@@ -10,8 +10,8 @@ import (
 
 	"github.com/ava-labs/avalanchego/utils/logging"
 	"github.com/ava-labs/avalanchego/utils/profiler"
-	"github.com/ava-labs/hypersdk/trace"
-	"github.com/ava-labs/hypersdk/vm"
+	"github.com/jaimi-io/hypersdk/trace"
+	"github.com/jaimi-io/hypersdk/vm"
 )
 
 const avalancheGoMinCPU = 4

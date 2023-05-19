@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/ava-labs/avalanchego/snow/engine/common"
-	"github.com/ava-labs/hypersdk/window"
+	"github.com/jaimi-io/hypersdk/window"
 	"go.uber.org/zap"
 )
 
