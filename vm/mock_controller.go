@@ -15,10 +15,10 @@ import (
 	metrics "github.com/ava-labs/avalanchego/api/metrics"
 	database "github.com/ava-labs/avalanchego/database"
 	snow "github.com/ava-labs/avalanchego/snow"
+	gomock "github.com/golang/mock/gomock"
 	builder "github.com/jaimi-io/hypersdk/builder"
 	chain "github.com/jaimi-io/hypersdk/chain"
 	gossiper "github.com/jaimi-io/hypersdk/gossiper"
-	gomock "github.com/golang/mock/gomock"
 )
 
 // MockController is a mock of Controller interface.

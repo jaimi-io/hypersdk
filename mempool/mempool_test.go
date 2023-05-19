@@ -7,8 +7,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/jaimi-io/hypersdk/trace"
 	"github.com/golang/mock/gomock"
+	"github.com/jaimi-io/hypersdk/trace"
 	"github.com/stretchr/testify/require"
 )
 
