@@ -12,8 +12,9 @@ import (
 	context "context"
 	reflect "reflect"
 
-	codec "github.com/jaimi-io/hypersdk/codec"
+	ids "github.com/ava-labs/avalanchego/ids"
 	gomock "github.com/golang/mock/gomock"
+	codec "github.com/jaimi-io/hypersdk/codec"
 )
 
 // MockAuth is a mock of Auth interface.
@@ -54,31 +55,31 @@ func (mr *MockAuthMockRecorder) AsyncVerify(arg0 interface{}) *gomock.Call {
 }
 
 // CanDeduct mocks base method.
-func (m *MockAuth) CanDeduct(arg0 context.Context, arg1 Database, arg2 uint64) error {
+func (m *MockAuth) CanDeduct(arg0 context.Context, arg1 Database, arg2 uint64, arg3 ids.ID) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CanDeduct", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "CanDeduct", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CanDeduct indicates an expected call of CanDeduct.
-func (mr *MockAuthMockRecorder) CanDeduct(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockAuthMockRecorder) CanDeduct(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CanDeduct", reflect.TypeOf((*MockAuth)(nil).CanDeduct), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CanDeduct", reflect.TypeOf((*MockAuth)(nil).CanDeduct), arg0, arg1, arg2, arg3)
 }
 
 // Deduct mocks base method.
-func (m *MockAuth) Deduct(arg0 context.Context, arg1 Database, arg2 uint64) error {
+func (m *MockAuth) Deduct(arg0 context.Context, arg1 Database, arg2 uint64, arg3 ids.ID) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Deduct", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "Deduct", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Deduct indicates an expected call of Deduct.
-func (mr *MockAuthMockRecorder) Deduct(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockAuthMockRecorder) Deduct(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Deduct", reflect.TypeOf((*MockAuth)(nil).Deduct), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Deduct", reflect.TypeOf((*MockAuth)(nil).Deduct), arg0, arg1, arg2, arg3)
 }
 
 // Marshal mocks base method.
@@ -122,17 +123,17 @@ func (mr *MockAuthMockRecorder) Payer() *gomock.Call {
 }
 
 // Refund mocks base method.
-func (m *MockAuth) Refund(arg0 context.Context, arg1 Database, arg2 uint64) error {
+func (m *MockAuth) Refund(arg0 context.Context, arg1 Database, arg2 uint64, arg3 ids.ID) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Refund", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "Refund", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Refund indicates an expected call of Refund.
-func (mr *MockAuthMockRecorder) Refund(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockAuthMockRecorder) Refund(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Refund", reflect.TypeOf((*MockAuth)(nil).Refund), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Refund", reflect.TypeOf((*MockAuth)(nil).Refund), arg0, arg1, arg2, arg3)
 }
 
 // StateKeys mocks base method.
