@@ -206,15 +206,20 @@ func (t *Transaction) PreExecute(
 	if _, err := t.Auth.Verify(ctx, r, db, t.Action); err != nil {
 		return fmt.Errorf("%w: %v", ErrAuthFailed, err) //nolint:errorlint
 	}
-	maxUnits, err := t.MaxUnits(r)
-	if err != nil {
-		return err
+	// maxUnits, err := t.MaxUnits(r)
+	// if err != nil {
+	// 	return err
+	// }
+	// fee, err := smath.Mul64(maxUnits, unitPrice)
+	// // fee + token
+	// if err != nil {
+	// 	return err
+	// }
+	amount, tokenID := t.Action.Fee()
+	if amount > 0 {
+		return t.Auth.CanDeduct(ctx, db, uint64(amount), tokenID)
 	}
-	fee, err := smath.Mul64(maxUnits, unitPrice)
-	if err != nil {
-		return err
-	}
-	return t.Auth.CanDeduct(ctx, db, fee)
+	return nil
 }
 
 // Execute after knowing a transaction can pay a fee
@@ -251,16 +256,19 @@ func (t *Transaction) Execute(
 	}
 
 	// Always charge fee first in case [Action] moves funds
-	unitPrice := t.Base.UnitPrice
-	maxUnits, err := t.MaxUnits(r)
-	if err != nil {
-		// Should never happen
-		return nil, err
-	}
-	if err := t.Auth.Deduct(ctx, tdb, unitPrice*maxUnits); err != nil {
-		// This should never fail for low balance (as we check [CanDeductFee]
-		// immediately before.
-		return nil, err
+	// unitPrice := t.Base.UnitPrice
+	// maxUnits, err := t.MaxUnits(r)
+	// if err != nil {
+	// 	// Should never happen
+	// 	return nil, err
+	// }
+	amount, tokenID := t.Action.Fee()
+	if amount > 0 {
+		if err := t.Auth.Deduct(ctx, tdb, uint64(amount), tokenID); err != nil {
+			// This should never fail for low balance (as we check [CanDeductFee]
+			// immediately before.
+			return nil, err
+		}
 	}
 
 	// We create a temp state to ensure we don't commit failed actions to state.
@@ -288,9 +296,9 @@ func (t *Transaction) Execute(
 	}
 
 	// Return any funds from unused units
-	refund := (maxUnits - result.Units) * unitPrice
+	refund := -amount
 	if refund > 0 {
-		if err := t.Auth.Refund(ctx, tdb, refund); err != nil {
+		if err := t.Auth.Refund(ctx, tdb, uint64(refund), tokenID); err != nil {
 			return nil, err
 		}
 	}

@@ -131,6 +131,8 @@ type Action interface {
 	// If attempt to reference missing key, error...it is ok to not use all keys (conditional logic based on state)
 	StateKeys(auth Auth, txID ids.ID) [][]byte
 
+	Fee() (amount int64, tokenID ids.ID) // Fee charged by this action defined by a given token and amount
+
 	// Key distinction with "Auth" is the payment of fees. All non-fee payments
 	// occur in Execute but Auth handles fees.
 	//
@@ -174,9 +176,14 @@ type Auth interface {
 
 	// TODO: identifier->may be used to send to in action as well?
 	Payer() []byte // need to track mempool + charge fees -> used to clear related accounts if balance check fails
-	CanDeduct(ctx context.Context, db Database, amount uint64) error
-	Deduct(ctx context.Context, db Database, amount uint64) error
-	Refund(ctx context.Context, db Database, amount uint64) error // only invoked if amount > 0
+	CanDeduct(ctx context.Context, db Database, amount uint64, tokenID ids.ID) error
+	Deduct(ctx context.Context, db Database, amount uint64, tokenID ids.ID) error
+	Refund(
+		ctx context.Context,
+		db Database,
+		amount uint64,
+		tokenID ids.ID,
+	) error // only invoked if amount > 0
 
 	Marshal(p *codec.Packer)
 }
