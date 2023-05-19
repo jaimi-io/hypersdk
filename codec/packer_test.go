@@ -7,9 +7,9 @@ import (
 	"testing"
 
 	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/hypersdk/consts"
-	"github.com/ava-labs/hypersdk/crypto"
-	"github.com/ava-labs/hypersdk/window"
+	"github.com/jaimi-io/hypersdk/consts"
+	"github.com/jaimi-io/hypersdk/crypto"
+	"github.com/jaimi-io/hypersdk/window"
 	"github.com/stretchr/testify/require"
 )
 

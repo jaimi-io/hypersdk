@@ -16,7 +16,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.uber.org/zap"
 
-	"github.com/ava-labs/hypersdk/tstate"
+	"github.com/jaimi-io/hypersdk/tstate"
 )
 
 func HandlePreExecute(

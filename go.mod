@@ -1,4 +1,4 @@
-module github.com/ava-labs/hypersdk
+module github.com/jaimi-io/hypersdk
 
 go 1.20
 

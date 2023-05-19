@@ -9,9 +9,9 @@ import (
 	"sync"
 
 	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/hypersdk/chain"
-	"github.com/ava-labs/hypersdk/utils"
 	"github.com/gorilla/websocket"
+	"github.com/jaimi-io/hypersdk/chain"
+	"github.com/jaimi-io/hypersdk/utils"
 )
 
 const pendingChanSize = 8_192

@@ -31,15 +31,15 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/ava-labs/hypersdk/builder"
-	"github.com/ava-labs/hypersdk/chain"
-	"github.com/ava-labs/hypersdk/emap"
-	"github.com/ava-labs/hypersdk/gossiper"
-	"github.com/ava-labs/hypersdk/mempool"
-	"github.com/ava-labs/hypersdk/rpc"
-	htrace "github.com/ava-labs/hypersdk/trace"
-	hutils "github.com/ava-labs/hypersdk/utils"
-	"github.com/ava-labs/hypersdk/workers"
+	"github.com/jaimi-io/hypersdk/builder"
+	"github.com/jaimi-io/hypersdk/chain"
+	"github.com/jaimi-io/hypersdk/emap"
+	"github.com/jaimi-io/hypersdk/gossiper"
+	"github.com/jaimi-io/hypersdk/mempool"
+	"github.com/jaimi-io/hypersdk/rpc"
+	htrace "github.com/jaimi-io/hypersdk/trace"
+	hutils "github.com/jaimi-io/hypersdk/utils"
+	"github.com/jaimi-io/hypersdk/workers"
 )
 
 type VM struct {

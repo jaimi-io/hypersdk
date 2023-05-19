@@ -10,7 +10,7 @@ import (
 	"github.com/ava-labs/avalanchego/database"
 	"github.com/ava-labs/avalanchego/trace"
 
-	"github.com/ava-labs/hypersdk/tstate"
+	"github.com/jaimi-io/hypersdk/tstate"
 )
 
 type fetchData struct {

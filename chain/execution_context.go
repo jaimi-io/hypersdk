@@ -9,8 +9,8 @@ import (
 	"github.com/ava-labs/avalanchego/ids"
 	"github.com/ava-labs/avalanchego/trace"
 	"github.com/ava-labs/avalanchego/utils/math"
-	"github.com/ava-labs/hypersdk/consts"
-	"github.com/ava-labs/hypersdk/window"
+	"github.com/jaimi-io/hypersdk/consts"
+	"github.com/jaimi-io/hypersdk/window"
 )
 
 type ExecutionContext struct {

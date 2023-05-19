@@ -5,7 +5,7 @@ package chain
 
 import (
 	"github.com/ava-labs/avalanchego/ids"
-	"github.com/ava-labs/hypersdk/codec"
+	"github.com/jaimi-io/hypersdk/codec"
 )
 
 type Base struct {

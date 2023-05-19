@@ -5,8 +5,8 @@ package chain
 
 import (
 	"github.com/ava-labs/avalanchego/vms/platformvm/warp"
-	"github.com/ava-labs/hypersdk/codec"
-	"github.com/ava-labs/hypersdk/consts"
+	"github.com/jaimi-io/hypersdk/codec"
+	"github.com/jaimi-io/hypersdk/consts"
 )
 
 type Result struct {

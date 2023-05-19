@@ -8,7 +8,7 @@ import (
 
 	"github.com/ava-labs/avalanchego/snow/choices"
 	"github.com/ava-labs/avalanchego/snow/engine/snowman/block"
-	"github.com/ava-labs/hypersdk/chain"
+	"github.com/jaimi-io/hypersdk/chain"
 	"go.uber.org/zap"
 )
 

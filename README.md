@@ -5,9 +5,9 @@
   Opinionated Framework for Building Hyper-Scalable Blockchains on Avalanche
 </p>
 <p align="center">
-  <a href="https://goreportcard.com/report/github.com/ava-labs/hypersdk"><img src="https://goreportcard.com/badge/github.com/ava-labs/hypersdk" /></a>
-  <a href="https://github.com/ava-labs/hypersdk/actions/workflows/unit-tests.yml"><img src="https://github.com/ava-labs/hypersdk/actions/workflows/unit-tests.yml/badge.svg" /></a>
-  <a href="https://github.com/ava-labs/hypersdk/actions/workflows/static-analysis.yml"><img src="https://github.com/ava-labs/hypersdk/actions/workflows/static-analysis.yml/badge.svg" /></a>
+  <a href="https://goreportcard.com/report/github.com/jaimi-io/hypersdk"><img src="https://goreportcard.com/badge/github.com/jaimi-io/hypersdk" /></a>
+  <a href="https://github.com/jaimi-io/hypersdk/actions/workflows/unit-tests.yml"><img src="https://github.com/jaimi-io/hypersdk/actions/workflows/unit-tests.yml/badge.svg" /></a>
+  <a href="https://github.com/jaimi-io/hypersdk/actions/workflows/static-analysis.yml"><img src="https://github.com/jaimi-io/hypersdk/actions/workflows/static-analysis.yml/badge.svg" /></a>
 <a href="./LICENSE" ><img src="https://img.shields.io/badge/License-Ecosystem-blue.svg" /></a>
 </p>
 
@@ -588,7 +588,7 @@ compatible with most `hypervms` (and maintained in the `hypersdk`)._
 
 ## Future Work
 _If you want to take the lead on any of these items, please
-[start a discussion](https://github.com/ava-labs/hypersdk/discussions) or reach
+[start a discussion](https://github.com/jaimi-io/hypersdk/discussions) or reach
 out on the Avalanche Discord._
 
 * Use pre-specified state keys to process transactions in parallel (txs with no

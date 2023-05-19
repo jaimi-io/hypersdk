@@ -18,10 +18,10 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/ava-labs/hypersdk/builder"
-	"github.com/ava-labs/hypersdk/chain"
-	"github.com/ava-labs/hypersdk/gossiper"
-	"github.com/ava-labs/hypersdk/workers"
+	"github.com/jaimi-io/hypersdk/builder"
+	"github.com/jaimi-io/hypersdk/chain"
+	"github.com/jaimi-io/hypersdk/gossiper"
+	"github.com/jaimi-io/hypersdk/workers"
 )
 
 var (
