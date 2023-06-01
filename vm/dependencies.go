@@ -65,6 +65,7 @@ type Controller interface {
 		handler Handlers,
 		actionRegistry chain.ActionRegistry,
 		authRegistry chain.AuthRegistry,
+		memoryState any,
 		err error,
 	)
 

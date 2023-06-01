@@ -61,6 +61,7 @@ type VM struct {
 	handlers       Handlers
 	actionRegistry chain.ActionRegistry
 	authRegistry   chain.AuthRegistry
+	memoryState    any
 
 	tracer  trace.Tracer
 	mempool *mempool.Mempool[*chain.Transaction]
@@ -165,7 +166,7 @@ func (vm *VM) Initialize(
 
 	// Always initialize implementation first
 	vm.config, vm.genesis, vm.builder, vm.gossiper, vm.vmDB,
-		vm.rawStateDB, vm.handlers, vm.actionRegistry, vm.authRegistry, err = vm.c.Initialize(
+		vm.rawStateDB, vm.handlers, vm.actionRegistry, vm.authRegistry, vm.memoryState, err = vm.c.Initialize(
 		vm,
 		snowCtx,
 		gatherer,
@@ -860,4 +861,8 @@ func (*VM) VerifyHeightIndex(context.Context) error { return nil }
 // Note: must return database.ErrNotFound if the index at height is unknown.
 func (vm *VM) GetBlockIDAtHeight(_ context.Context, height uint64) (ids.ID, error) {
 	return vm.GetDiskBlockIDAtHeight(height)
+}
+
+func (vm *VM) MemoryState() any {
+	return vm.memoryState
 }
