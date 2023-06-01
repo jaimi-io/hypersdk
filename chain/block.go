@@ -408,6 +408,7 @@ func (b *StatelessBlock) innerVerify(ctx context.Context) (merkledb.TrieView, er
 	var (
 		log = b.vm.Logger()
 		r   = b.vm.Rules(b.Tmstmp)
+		ms   = b.vm.MemoryState()
 	)
 
 	// Perform basic correctness checks before doing any expensive work
@@ -538,6 +539,7 @@ func (b *StatelessBlock) innerVerify(ctx context.Context) (merkledb.TrieView, er
 		ctx,
 		ectx,
 		r,
+		ms,
 	)
 	if err != nil {
 		log.Error("failed to execute block", zap.Error(err))

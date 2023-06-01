@@ -55,6 +55,7 @@ func BuildBlock(
 
 	nextTime := time.Now().Unix()
 	r := vm.Rules(nextTime)
+	ms := vm.MemoryState()
 	parent, err := vm.GetStatelessBlock(ctx, preferred)
 	if err != nil {
 		log.Warn("block building failed: couldn't get parent", zap.Error(err))
@@ -204,6 +205,7 @@ func BuildBlock(
 				ts,
 				nextTime,
 				next.WarpMessage != nil && warpErr == nil,
+				ms,
 			)
 			if err != nil {
 				// This error should only be raised by the handler, not the

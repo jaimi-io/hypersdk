@@ -231,6 +231,7 @@ func (t *Transaction) Execute(
 	tdb *tstate.TState,
 	timestamp int64,
 	warpVerified bool,
+	memoryState any,
 ) (*Result, error) {
 	// Check warp message is not duplicate
 	if t.WarpMessage != nil {
@@ -273,7 +274,7 @@ func (t *Transaction) Execute(
 
 	// We create a temp state to ensure we don't commit failed actions to state.
 	start := tdb.OpIndex()
-	result, err := t.Action.Execute(ctx, r, tdb, timestamp, t.Auth, t.id, warpVerified)
+	result, err := t.Action.Execute(ctx, r, tdb, timestamp, t.Auth, t.id, warpVerified, memoryState)
 	if err != nil {
 		return nil, err
 	}
