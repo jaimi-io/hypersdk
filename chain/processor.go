@@ -82,6 +82,7 @@ func (p *Processor) Execute(
 	ctx context.Context,
 	ectx *ExecutionContext,
 	r Rules,
+	memoryState any,
 ) (uint64, uint64, []*Result, int, int, error) {
 	ctx, span := p.tracer.Start(ctx, "Processor.Execute")
 	defer span.End()
@@ -117,9 +118,9 @@ func (p *Processor) Execute(
 			case warpVerified = <-warpMsg.verifiedChan:
 			case <-ctx.Done():
 				return 0, 0, nil, 0, 0, ctx.Err()
-			}
+			};
 		}
-		result, err := tx.Execute(ctx, ectx, r, sm, ts, t, ok && warpVerified)
+		result, err := tx.Execute(ctx, ectx, r, sm, ts, t, ok && warpVerified, memoryState)
 		if err != nil {
 			return 0, 0, nil, 0, 0, err
 		}

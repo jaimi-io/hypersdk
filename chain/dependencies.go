@@ -46,6 +46,7 @@ type VM interface {
 	SetLastAccepted(*StatelessBlock) error
 	GetStatelessBlock(context.Context, ids.ID) (*StatelessBlock, error)
 
+	MemoryState() any
 	State() (*merkledb.Database, error)
 	StateManager() StateManager
 	ValidatorState() validators.State
@@ -150,6 +151,7 @@ type Action interface {
 		auth Auth,
 		txID ids.ID,
 		warpVerified bool,
+		memoryState any,
 	) (result *Result, err error) // err should only be returned if fatal
 
 	Marshal(p *codec.Packer)
