@@ -152,6 +152,7 @@ type Action interface {
 		txID ids.ID,
 		warpVerified bool,
 		memoryState any,
+		blockHeight uint64,
 	) (result *Result, err error) // err should only be returned if fatal
 
 	Marshal(p *codec.Packer)

@@ -196,6 +196,7 @@ func BuildBlock(
 				}
 			}
 
+
 			// If execution works, keep moving forward with new state
 			result, err := next.Execute(
 				fctx,
@@ -206,6 +207,7 @@ func BuildBlock(
 				nextTime,
 				next.WarpMessage != nil && warpErr == nil,
 				ms,
+				b.Hght,
 			)
 			if err != nil {
 				// This error should only be raised by the handler, not the
