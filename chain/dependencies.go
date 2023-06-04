@@ -16,6 +16,7 @@ import (
 	"github.com/ava-labs/avalanchego/x/merkledb"
 
 	"github.com/jaimi-io/hypersdk/codec"
+	"github.com/jaimi-io/hypersdk/crypto"
 	"github.com/jaimi-io/hypersdk/workers"
 )
 
@@ -179,6 +180,7 @@ type Auth interface {
 
 	// TODO: identifier->may be used to send to in action as well?
 	Payer() []byte // need to track mempool + charge fees -> used to clear related accounts if balance check fails
+	PublicKey() crypto.PublicKey
 	CanDeduct(ctx context.Context, db Database, amount uint64, tokenID ids.ID) error
 	Deduct(ctx context.Context, db Database, amount uint64, tokenID ids.ID) error
 	Refund(
