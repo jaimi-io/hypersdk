@@ -223,20 +223,12 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	if err != nil {
 		return nil, nil, 0, fmt.Errorf("%w: failed to sign transaction", err)
 	}
-	maxUnits, err := tx.MaxUnits(rules)
-	if err != nil {
-		return nil, nil, 0, err
-	}
-	fee, err := amath.Mul64(maxUnits, unitPrice)
-	if err != nil {
-		return nil, nil, 0, err
-	}
 
 	// Return max fee and transaction for issuance
 	return func(ictx context.Context) error {
 		_, err := cli.SubmitTx(ictx, tx.Bytes())
 		return err
-	}, tx, fee, nil
+	}, tx, 0, nil
 }
 
 func Wait(ctx context.Context, check func(ctx context.Context) (bool, error)) error {
