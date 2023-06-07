@@ -25,5 +25,6 @@ type VM interface {
 	Registry() (chain.ActionRegistry, chain.AuthRegistry)
 	NodeID() ids.NodeID
 	Rules(int64) chain.Rules
+	MemoryState() any
 	Submit(ctx context.Context, verify bool, txs []*chain.Transaction) []error
 }

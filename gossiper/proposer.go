@@ -212,7 +212,7 @@ func (g *Proposer) TriggerGossip(ctx context.Context) error {
 			//
 			// TODO: consider removing this check (requires at least 1 database call
 			// per gossiped tx)
-			if err := next.PreExecute(ctx, ectx, r, state, now); err != nil {
+			if err := next.PreExecute(ctx, ectx, r, state, now, g.vm.MemoryState()); err != nil {
 				// Do not gossip invalid txs (may become invalid during normal block
 				// processing)
 				cont, restore, removeAcct := chain.HandlePreExecute(err)
