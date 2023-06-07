@@ -6,6 +6,7 @@ package rpc
 import (
 	"context"
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -13,7 +14,7 @@ import (
 	"github.com/ava-labs/avalanchego/snow/validators"
 	autils "github.com/ava-labs/avalanchego/utils"
 	"github.com/ava-labs/avalanchego/utils/crypto/bls"
-	"github.com/ava-labs/avalanchego/utils/math"
+	amath "github.com/ava-labs/avalanchego/utils/math"
 	"github.com/ava-labs/avalanchego/utils/set"
 	"github.com/ava-labs/avalanchego/vms/platformvm/warp"
 	"golang.org/x/exp/maps"
@@ -190,6 +191,13 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	// Construct transaction
 	now := time.Now().Unix()
 	rules := parser.Rules(now)
+	random := rand.New(rand.NewSource(int64(now)))
+	units := action.MaxUnits(rules)
+	if units > 1 {
+		unitPrice = uint64(random.Int63n(int64(units))) + 1
+	} else if units == 1 {
+		unitPrice = uint64(1_000_000_000_000)
+	}
 	base := &chain.Base{
 		Timestamp: now + rules.GetValidityWindow(),
 		ChainID:   parser.ChainID(),
@@ -219,7 +227,7 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	if err != nil {
 		return nil, nil, 0, err
 	}
-	fee, err := math.Mul64(maxUnits, unitPrice)
+	fee, err := amath.Mul64(maxUnits, unitPrice)
 	if err != nil {
 		return nil, nil, 0, err
 	}
@@ -257,7 +265,7 @@ func getCanonicalValidatorSet(
 		err         error
 	)
 	for _, vdr := range vdrSet {
-		totalWeight, err = math.Add64(totalWeight, vdr.Weight)
+		totalWeight, err = amath.Add64(totalWeight, vdr.Weight)
 		if err != nil {
 			return nil, 0, fmt.Errorf("%w: %v", warp.ErrWeightOverflow, err) //nolint:errorlint
 		}
