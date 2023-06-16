@@ -6,6 +6,7 @@ package rpc
 import (
 	"context"
 	"fmt"
+	"math"
 	"math/rand"
 	"strings"
 	"time"
@@ -189,12 +190,14 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	modifiers ...Modifier,
 ) (func(context.Context) error, *chain.Transaction, uint64, error) {
 	// Construct transaction
-	now := time.Now().Unix()
+	ts := time.Now()
+	now := ts.Unix()
 	rules := parser.Rules(now)
-	random := rand.New(rand.NewSource(int64(now)))
+	random := rand.New(rand.NewSource(int64(ts.UnixNano())))
 	units := action.MaxUnits(rules)
 	if units > 1 {
-		unitPrice = uint64(random.Int63n(int64(units))) + 1
+		sqrtVol := int64(math.Sqrt(float64(units)))
+		unitPrice = uint64(random.Int63n(sqrtVol)) + 1
 	} else if units == 1 {
 		unitPrice = uint64(1_000_000_000_000)
 	}
