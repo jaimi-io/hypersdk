@@ -104,7 +104,7 @@ func (p *Processor) Execute(
 		ts.SetScope(ctx, tx.StateKeys(sm), txData.storage)
 
 		// Execute tx
-		if err := tx.PreExecute(ctx, ectx, r, ts, t); err != nil {
+		if err := tx.PreExecute(ctx, ectx, r, ts, t, memoryState); err != nil {
 			return 0, 0, nil, 0, 0, err
 		}
 		// Wait to execute transaction until we have the warp result processed.

@@ -16,6 +16,7 @@ import (
 	"github.com/ava-labs/avalanchego/x/merkledb"
 
 	"github.com/jaimi-io/hypersdk/codec"
+	"github.com/jaimi-io/hypersdk/crypto"
 	"github.com/jaimi-io/hypersdk/workers"
 )
 
@@ -132,7 +133,8 @@ type Action interface {
 	// If attempt to reference missing key, error...it is ok to not use all keys (conditional logic based on state)
 	StateKeys(auth Auth, txID ids.ID) [][]byte
 
-	Fee() (amount int64, tokenID ids.ID) // Fee charged by this action defined by a given token and amount
+	Fee(timestamp int64, auth Auth, memoryState any) (amount uint64) // Fee charged by this action defined by a given token and amount
+	Token() (tokenID ids.ID)
 
 	// Key distinction with "Auth" is the payment of fees. All non-fee payments
 	// occur in Execute but Auth handles fees.
@@ -179,6 +181,7 @@ type Auth interface {
 
 	// TODO: identifier->may be used to send to in action as well?
 	Payer() []byte // need to track mempool + charge fees -> used to clear related accounts if balance check fails
+	PublicKey() crypto.PublicKey
 	CanDeduct(ctx context.Context, db Database, amount uint64, tokenID ids.ID) error
 	Deduct(ctx context.Context, db Database, amount uint64, tokenID ids.ID) error
 	Refund(

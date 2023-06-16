@@ -727,7 +727,7 @@ func (vm *VM) Submit(
 		// This may fail if the state we are utilizing is invalidated (if a trie
 		// view from a different branch is committed underneath it). We prefer this
 		// instead of putting a lock around all commits.
-		if err := tx.PreExecute(ctx, ectx, r, state, now); err != nil {
+		if err := tx.PreExecute(ctx, ectx, r, state, now, vm.memoryState); err != nil {
 			errs = append(errs, err)
 			continue
 		}

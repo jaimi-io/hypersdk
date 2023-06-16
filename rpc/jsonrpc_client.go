@@ -6,6 +6,8 @@ package rpc
 import (
 	"context"
 	"fmt"
+	"math"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -13,7 +15,7 @@ import (
 	"github.com/ava-labs/avalanchego/snow/validators"
 	autils "github.com/ava-labs/avalanchego/utils"
 	"github.com/ava-labs/avalanchego/utils/crypto/bls"
-	"github.com/ava-labs/avalanchego/utils/math"
+	amath "github.com/ava-labs/avalanchego/utils/math"
 	"github.com/ava-labs/avalanchego/utils/set"
 	"github.com/ava-labs/avalanchego/vms/platformvm/warp"
 	"golang.org/x/exp/maps"
@@ -188,8 +190,17 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	modifiers ...Modifier,
 ) (func(context.Context) error, *chain.Transaction, uint64, error) {
 	// Construct transaction
-	now := time.Now().Unix()
+	ts := time.Now()
+	now := ts.Unix()
 	rules := parser.Rules(now)
+	random := rand.New(rand.NewSource(int64(ts.UnixNano())))
+	units := action.MaxUnits(rules)
+	if units > 1 {
+		sqrtVol := int64(math.Sqrt(float64(units)))
+		unitPrice = uint64(random.Int63n(sqrtVol)) + 1
+	} else if units == 1 {
+		unitPrice = uint64(1_000_000_000_000)
+	}
 	base := &chain.Base{
 		Timestamp: now + rules.GetValidityWindow(),
 		ChainID:   parser.ChainID(),
@@ -215,20 +226,12 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	if err != nil {
 		return nil, nil, 0, fmt.Errorf("%w: failed to sign transaction", err)
 	}
-	maxUnits, err := tx.MaxUnits(rules)
-	if err != nil {
-		return nil, nil, 0, err
-	}
-	fee, err := math.Mul64(maxUnits, unitPrice)
-	if err != nil {
-		return nil, nil, 0, err
-	}
 
 	// Return max fee and transaction for issuance
 	return func(ictx context.Context) error {
 		_, err := cli.SubmitTx(ictx, tx.Bytes())
 		return err
-	}, tx, fee, nil
+	}, tx, 0, nil
 }
 
 func Wait(ctx context.Context, check func(ctx context.Context) (bool, error)) error {
@@ -257,7 +260,7 @@ func getCanonicalValidatorSet(
 		err         error
 	)
 	for _, vdr := range vdrSet {
-		totalWeight, err = math.Add64(totalWeight, vdr.Weight)
+		totalWeight, err = amath.Add64(totalWeight, vdr.Weight)
 		if err != nil {
 			return nil, 0, fmt.Errorf("%w: %v", warp.ErrWeightOverflow, err) //nolint:errorlint
 		}

@@ -181,6 +181,7 @@ func (t *Transaction) PreExecute(
 	r Rules,
 	db Database,
 	timestamp int64,
+	memoryState any,
 ) error {
 	if err := t.Base.Execute(ectx.ChainID, r, timestamp); err != nil {
 		return err
@@ -215,7 +216,8 @@ func (t *Transaction) PreExecute(
 	// if err != nil {
 	// 	return err
 	// }
-	amount, tokenID := t.Action.Fee()
+	amount := t.Action.Fee(timestamp, t.Auth, memoryState)
+	tokenID := t.Action.Token()
 	if amount > 0 {
 		return t.Auth.CanDeduct(ctx, db, uint64(amount), tokenID)
 	}
@@ -264,7 +266,8 @@ func (t *Transaction) Execute(
 	// 	// Should never happen
 	// 	return nil, err
 	// }
-	amount, tokenID := t.Action.Fee()
+	amount := t.Action.Fee(timestamp, t.Auth, memoryState)
+	tokenID := t.Action.Token()
 	if amount > 0 {
 		if err := t.Auth.Deduct(ctx, tdb, uint64(amount), tokenID); err != nil {
 			// This should never fail for low balance (as we check [CanDeductFee]
@@ -298,9 +301,8 @@ func (t *Transaction) Execute(
 	}
 
 	// Return any funds from unused units
-	refund := -amount
-	if refund > 0 {
-		if err := t.Auth.Refund(ctx, tdb, uint64(refund), tokenID); err != nil {
+	if !result.Success {
+		if err := t.Auth.Refund(ctx, tdb, amount, tokenID); err != nil {
 			return nil, err
 		}
 	}
