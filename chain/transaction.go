@@ -204,7 +204,7 @@ func (t *Transaction) PreExecute(
 	if unitPrice < ectx.NextUnitPrice {
 		return ErrInsufficientPrice
 	}
-	if _, err := t.Auth.Verify(ctx, r, db, t.Action); err != nil {
+	if _, err := t.Auth.Verify(ctx, r, db, t.Action, memoryState); err != nil {
 		return fmt.Errorf("%w: %v", ErrAuthFailed, err) //nolint:errorlint
 	}
 	// maxUnits, err := t.MaxUnits(r)
@@ -254,7 +254,7 @@ func (t *Transaction) Execute(
 	}
 
 	// Verify auth is correct prior to doing anything
-	authUnits, err := t.Auth.Verify(ctx, r, tdb, t.Action)
+	authUnits, err := t.Auth.Verify(ctx, r, tdb, t.Action, memoryState)
 	if err != nil {
 		return nil, err
 	}

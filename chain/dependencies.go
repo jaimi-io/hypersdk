@@ -175,6 +175,7 @@ type Auth interface {
 		r Rules,
 		db Database, // Should only read, no mutate
 		action Action, // Authentication may be scoped to action type
+		memoryState any,
 	) (units uint64, err error) // if there is account abstraction, may need to pull from state some mapping
 	// if verify is not validate, then what? -> can't actually change fee then?
 	// units should include any cost associated with [AsyncVerify]
