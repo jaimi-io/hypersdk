@@ -134,7 +134,7 @@ type Action interface {
 	StateKeys(auth Auth, txID ids.ID) [][]byte
 
 	Fee(timestamp int64, auth Auth, memoryState any) (amount uint64) // Fee charged by this action defined by a given token and amount
-	Token() (tokenID ids.ID)
+	Token(memoryState any) (tokenID ids.ID)
 
 	// Key distinction with "Auth" is the payment of fees. All non-fee payments
 	// occur in Execute but Auth handles fees.
