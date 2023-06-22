@@ -200,22 +200,9 @@ func (t *Transaction) PreExecute(
 	if end >= 0 && timestamp > end {
 		return ErrAuthNotActivated
 	}
-	unitPrice := t.Base.UnitPrice
-	if unitPrice < ectx.NextUnitPrice {
-		return ErrInsufficientPrice
-	}
 	if _, err := t.Auth.Verify(ctx, r, db, t.Action); err != nil {
 		return fmt.Errorf("%w: %v", ErrAuthFailed, err) //nolint:errorlint
 	}
-	// maxUnits, err := t.MaxUnits(r)
-	// if err != nil {
-	// 	return err
-	// }
-	// fee, err := smath.Mul64(maxUnits, unitPrice)
-	// // fee + token
-	// if err != nil {
-	// 	return err
-	// }
 	amount := t.Action.Fee(timestamp, 0, t.Auth, memoryState)
 	tokenID := t.Action.Token(memoryState)
 	if amount > 0 {
