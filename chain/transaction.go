@@ -200,24 +200,11 @@ func (t *Transaction) PreExecute(
 	if end >= 0 && timestamp > end {
 		return ErrAuthNotActivated
 	}
-	unitPrice := t.Base.UnitPrice
-	if unitPrice < ectx.NextUnitPrice {
-		return ErrInsufficientPrice
-	}
 	if _, err := t.Auth.Verify(ctx, r, db, t.Action); err != nil {
 		return fmt.Errorf("%w: %v", ErrAuthFailed, err) //nolint:errorlint
 	}
-	// maxUnits, err := t.MaxUnits(r)
-	// if err != nil {
-	// 	return err
-	// }
-	// fee, err := smath.Mul64(maxUnits, unitPrice)
-	// // fee + token
-	// if err != nil {
-	// 	return err
-	// }
-	amount := t.Action.Fee(timestamp, t.Auth, memoryState)
-	tokenID := t.Action.Token()
+	amount := t.Action.Fee(timestamp, 0, t.Auth, memoryState)
+	tokenID := t.Action.Token(memoryState)
 	if amount > 0 {
 		return t.Auth.CanDeduct(ctx, db, uint64(amount), tokenID)
 	}
@@ -266,10 +253,10 @@ func (t *Transaction) Execute(
 	// 	// Should never happen
 	// 	return nil, err
 	// }
-	amount := t.Action.Fee(timestamp, t.Auth, memoryState)
-	tokenID := t.Action.Token()
+	amount := t.Action.Fee(timestamp, blockHeight, t.Auth, memoryState)
+	tokenID := t.Action.Token(memoryState)
 	if amount > 0 {
-		if err := t.Auth.Deduct(ctx, tdb, uint64(amount), tokenID); err != nil {
+		if err := t.Auth.Deduct(ctx, tdb, amount, tokenID); err != nil {
 			// This should never fail for low balance (as we check [CanDeductFee]
 			// immediately before.
 			return nil, err

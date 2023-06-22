@@ -195,9 +195,11 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	rules := parser.Rules(now)
 	random := rand.New(rand.NewSource(int64(ts.UnixNano())))
 	units := action.MaxUnits(rules)
+	maxFee := uint64(1)
 	if units > 1 {
 		sqrtVol := int64(math.Sqrt(float64(units)))
 		unitPrice = uint64(random.Int63n(sqrtVol)) + 1
+		maxFee = uint64(0.0015 * float64(uint64(units))) * uint64(math.Pow10(4))
 	} else if units == 1 {
 		unitPrice = uint64(1_000_000_000_000)
 	}
@@ -231,7 +233,7 @@ func (cli *JSONRPCClient) GenerateTransactionManual(
 	return func(ictx context.Context) error {
 		_, err := cli.SubmitTx(ictx, tx.Bytes())
 		return err
-	}, tx, 0, nil
+	}, tx, maxFee, nil
 }
 
 func Wait(ctx context.Context, check func(ctx context.Context) (bool, error)) error {
