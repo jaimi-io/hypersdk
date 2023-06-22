@@ -133,7 +133,7 @@ type Action interface {
 	// If attempt to reference missing key, error...it is ok to not use all keys (conditional logic based on state)
 	StateKeys(auth Auth, txID ids.ID) [][]byte
 
-	Fee(timestamp int64, auth Auth, memoryState any) (amount uint64) // Fee charged by this action defined by a given token and amount
+	Fee(timestamp int64, blockHeight uint64, auth Auth, memoryState any) (amount uint64) // Fee charged by this action defined by a given token and amount
 	Token(memoryState any) (tokenID ids.ID)
 
 	// Key distinction with "Auth" is the payment of fees. All non-fee payments
